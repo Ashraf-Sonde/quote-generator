@@ -1,13 +1,13 @@
 // Get quote from API
 async function getQuote() {
-  // const proxyUrl = 'http://103.46.233.186/';
+  const proxyUrl = 'https://vast-castle-88296.herokuapp.com/';
   const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(proxyUrl + apiUrl);
     const data = await response.json();
     console.log(data);
   } catch (error) {
-    // getQuote();
+    getQuote();
     console.log('Failed to fetch Quote!', error);
   }
 }
