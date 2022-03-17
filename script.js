@@ -3,11 +3,27 @@ const quote = document.querySelector('#quote');
 const author = document.querySelector('#author');
 const twitterBtn = document.querySelector('#twitter');
 const newQuoteBtn = document.querySelector('#new-quote');
+const loader = document.querySelector('#loader');
+
+function showLoadingSpinner() {
+  loader.hidden = false;
+  quoteContainer.hidden = true;
+}
+
+function removeLoadingSpinner() {
+  if (!loader.hidden) {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+  }
+}
 
 // Get quote from API
 async function getQuote() {
+  showLoadingSpinner();
+
   const proxyUrl = 'https://vast-castle-88296.herokuapp.com/';
   const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
+
   try {
     const response = await fetch(proxyUrl + apiUrl);
     const data = await response.json();
@@ -24,6 +40,8 @@ async function getQuote() {
     } else {
       author.innerText = data.quoteAuthor;
     }
+    removeLoadingSpinner();
+
   } catch (error) {
     getQuote();
     console.log('Failed to fetch Quote!', error);
